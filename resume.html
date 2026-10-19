@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rudra Pratap Singh — Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #111827;
+      background-color: #f3f4f6;
+      line-height: 1.45;
+      font-size: 13.5px;
+      padding: 30px 15px;
+    }
+
+    /* Print / PDF Controls */
+    .action-bar {
+      max-width: 800px;
+      margin: 0 auto 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-download {
+      background: #dc2626;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .btn-download:hover {
+      background: #b91c1c;
+    }
+
+    /* A4 Resume Container */
+    .resume-sheet {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 44px 48px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border-radius: 4px;
+    }
+
+    /* Header */
+    header {
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+    }
+
+    h1.name {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #111827;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .role-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #dc2626;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 12px;
+      color: #4b5563;
+      font-weight: 500;
+    }
+
+    .contact-row a {
+      color: #111827;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .contact-row a:hover {
+      color: #dc2626;
+      text-decoration: underline;
+    }
+
+    /* Section Styles */
+    section {
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #111827;
+      border-bottom: 1.5px solid #111827;
+      padding-bottom: 3px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Summary */
+    .summary-text {
+      color: #374151;
+      font-size: 12.8px;
+      text-align: justify;
+    }
+
+    /* Skills */
+    .skills-block {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .skill-line {
+      font-size: 12.5px;
+      color: #374151;
+    }
+
+    .skill-line strong {
+      color: #111827;
+      font-weight: 700;
+      min-width: 170px;
+      display: inline-block;
+    }
+
+    /* Projects & Items */
+    .project-item {
+      margin-bottom: 12px;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+
+    .item-title {
+      font-size: 13.8px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .item-links {
+      font-size: 11.8px;
+      font-weight: 600;
+    }
+
+    .item-links a {
+      color: #dc2626;
+      text-decoration: none;
+      margin-left: 8px;
+    }
+
+    .item-links a:hover {
+      text-decoration: underline;
+    }
+
+    .item-sub {
+      font-size: 11.8px;
+      color: #6b7280;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    ul.bullet-list {
+      padding-left: 18px;
+      color: #374151;
+      font-size: 12.5px;
+    }
+
+    ul.bullet-list li {
+      margin-bottom: 2.5px;
+    }
+
+    /* Education */
+    .edu-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .edu-left {
+      max-width: 80%;
+    }
+
+    .edu-degree {
+      font-size: 13px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .edu-institution {
+      font-size: 12px;
+      color: #4b5563;
+      font-weight: 500;
+    }
+
+    .edu-right {
+      text-align: right;
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    /* Print Engine Settings */
+    @media print {
+      body {
+        background: transparent;
+        padding: 0;
+      }
+
+      .action-bar {
+        display: none !important;
+      }
+
+      .resume-sheet {
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+        margin: 0;
+      }
+
+      @page {
+        size: A4;
+        margin: 14mm 15mm 14mm 15mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Controls for instant export -->
+  <div class="action-bar">
+    <span style="font-size: 13px; color: #4b5563;"></span>
+    <button class="btn-download" onclick="window.print()">
+      <i class="fa-solid fa-file-pdf"></i> Save / Print as PDF
+    </button>
+  </div>
+
+  <!-- Main Sheet -->
+  <main class="resume-sheet">
+    
+    <!-- Header -->
+    <header>
+      <h1 class="name">Rudra Pratap Singh</h1>
+      <div class="role-title">AI Web Developer & Designer</div>
+      <div class="contact-row">
+        <span><i class="fa-solid fa-location-dot"></i> Kanpur, Uttar Pradesh, India</span>
+        <a href="mailto:rudsigeamer@gmail.com"><i class="fa-solid fa-envelope"></i> rudsigeamer@gmail.com</a>
+        <a href="https://github.com/yummiilove" target="_blank"><i class="fa-brands fa-github"></i> github.com/yummiilove</a>
+        <a href="https://www.linkedin.com/in/-rudra-pratapsingh" target="_blank"><i class="fa-brands fa-linkedin"></i> linkedin.com/in/rudrapratapsing</a>
+      </div>
+    </header>
+
+    <!-- Professional Summary -->
+    <section>
+      <div class="section-title">Professional Summary</div>
+      <p class="summary-text">
+        Product-minded Computer Applications undergraduate specializing in interactive front-end development, responsive UI systems, and full-stack web applications. Experienced in conceptualizing and shipping live production storefronts and utility tools with clean state management, modular architectures, and fast performance. Strong foundational programming background in C, Python, and JavaScript, currently expanding into Java backend systems and React.js ecosystems.
+      </p>
+    </section>
+
+    <!-- Technical Skills -->
+    <section>
+      <div class="section-title">Technical Capabilities</div>
+      <div class="skills-block">
+        <div class="skill-line">
+          <strong>Programming Languages:</strong> JavaScript (ES6+), Python, C, Java (Core & OOP), HTML5, CSS3
+        </div>
+        <div class="skill-line">
+          <strong>Frameworks & Animation:</strong> React.js, GSAP (GreenSock), CSS 3D Transforms, Responsive Grids & Flexbox
+        </div>
+        <div class="skill-line">
+          <strong>Backend & Architectures:</strong> Node.js, Express.js (Learning), REST API Design, LocalStorage Persistence
+        </div>
+        <div class="skill-line">
+          <strong>Design & Tooling:</strong> Figma (UI/UX), Generative AI Web Prototyping, Google Stitch, Git, GitHub, VS Code
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Projects -->
+    <section>
+      <div class="section-title">Featured Engineering Projects</div>
+
+      <!-- LumeeFlame -->
+      <div class="project-item">
+        <div class="item-header">
+          <span class="item-title">LumeeFlame — Handcrafted E-Commerce Storefront</span>
+          <span class="item-links">
+            <a href="https://lummeflame.vercel.app" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Store</a>
+            <a href="https://github.com/yummiilove" target="_blank"><i class="fa-brands fa-github"></i> Repository</a>
+          </span>
+        </div>
+        <div class="item-sub">Tech Stack: HTML5, CSS3, JavaScript, AI Visual Prototyping, Vercel</div>
+        <ul class="bullet-list">
+          <li>Architected and launched a responsive e-commerce storefront for sculpted soy candles with mobile-first layouts.</li>
+          <li>Optimized image assets and UI rendering, achieving rapid initial load speeds and zero Cumulative Layout Shift (CLS).</li>
+          <li>Designed high-fidelity product catalog cards, interactive hover states, and intuitive navigation flows using Figma.</li>
+        </ul>
+      </div>
+
+      <!-- Spendy -->
+      <div class="project-item">
+        <div class="item-header">
+          <span class="item-title">Spendy — Real-Time Expense & Ledger Tracker</span>
+          <span class="item-links">
+            <a href="https://spendy-indol.vercel.app/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live App</a>
+            <a href="https://github.com/yummiilove" target="_blank"><i class="fa-brands fa-github"></i> Repository</a>
+          </span>
+        </div>
+        <div class="item-sub">Tech Stack: Vanilla JavaScript, DOM API, LocalStorage, Custom CSS</div>
+        <ul class="bullet-list">
+          <li>Engineered a client-side personal finance tracker managing real-time dynamic debit/credit ledger calculations.</li>
+          <li>Implemented state updates in pure JavaScript without external dependencies for lightweight performance.</li>
+          <li>Integrated browser LocalStorage persistence to retain user balance and transaction history across browser sessions.</li>
+        </ul>
+      </div>
+
+      <!-- Webpage for Ads -->
+      <div class="project-item">
+        <div class="item-header">
+          <span class="item-title">Ad-Integrated Platform Architecture</span>
+          <span class="item-links">
+            <a href="https://webpage-for-ads.vercel.app/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>
+            <a href="https://github.com/yummiilove" target="_blank"><i class="fa-brands fa-github"></i> Repository</a>
+          </span>
+        </div>
+        <div class="item-sub">Tech Stack: JavaScript, Dynamic Ad Embedding, Responsive Web Design</div>
+        <ul class="bullet-list">
+          <li>Configured and deployed web structures designed to integrate programmatic advertisement tags without page disruption.</li>
+          <li>Structured asynchronous script loading pipelines to protect core thread performance and user experience.</li>
+        </ul>
+      </div>
+
+      <!-- 3D Portfolio -->
+      <div class="project-item">
+        <div class="item-header">
+          <span class="item-title">Interactive Neo-Brutalist 3D Developer Portfolio</span>
+          <span class="item-links">
+            <a href="https://github.com/yummiilove" target="_blank"><i class="fa-brands fa-github"></i> Source Code</a>
+          </span>
+        </div>
+        <div class="item-sub">Tech Stack: JavaScript, GSAP Engine, CSS 3D Transforms, CLI Terminal</div>
+        <ul class="bullet-list">
+          <li>Built a physical fan-out card deck interface featuring mouse-coordinate 3D parallax tilt and custom magnetic cursors.</li>
+          <li>Created an interactive bash-style CLI terminal emulator enabling recruiters to query commands directly.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section>
+      <div class="section-title">Education</div>
+
+      <div class="edu-item">
+        <div class="edu-left">
+          <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
+          <div class="edu-institution">Maharana Pratap Engineering College (Affiliated with AKTU) — Kanpur, UP</div>
+        </div>
+        <div class="edu-right">2025 – Present</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-left">
+          <div class="edu-degree">Senior Secondary Education (Class XII)</div>
+          <div class="edu-institution">J S P I C Paramandapur — Jansa, Varanasi, UP</div>
+        </div>
+        <div class="edu-right">Completed 2025</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-left">
+          <div class="edu-degree">Secondary School Education (Class X)</div>
+          <div class="edu-institution">Army Public School (APS) — Unchi Bassi, Punjab</div>
+        </div>
+        <div class="edu-right">Completed 2022</div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
