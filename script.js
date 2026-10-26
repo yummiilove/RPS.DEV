@@ -4,7 +4,7 @@
  * ------------------------------------------------------------------
  */
 
-// Profile picture path
+
 const PROFILE_PICTURE_SRC = "images/rudra-image.png";
 
 // 1. Projects Data Structure (Including new XAT Exam Simulator)
@@ -85,10 +85,11 @@ const projectsData = [
     liveUrl: "https://github.com/yummiilove",
     repoUrl: "https://github.com/yummiilove",
     isProfile: false
-  }
+  },
+  
 ];
 
-// 2. Expandable Skills Configuration
+
 const skillsConfig = [
   {
     category: "Languages",
