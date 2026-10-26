@@ -4,16 +4,29 @@
  * ------------------------------------------------------------------
  */
 
-// CHANGE YOUR PROFILE PICTURE HERE DIRECTLY IN CODE:
-// You can use a web URL or a local file like: "./profile.jpg"
+// Profile picture path
 const PROFILE_PICTURE_SRC = "images/rudra-image.png";
 
-// 1. Projects Data Structure
+// 1. Projects Data Structure (Including new XAT Exam Simulator)
 const projectsData = [
+  {
+    id: "xat-simulator",
+    tag: "EDTECH / SIMULATOR",
+    num: "01",
+    title: "XAT Exam Simulator",
+    shortDesc: "Realistic national exam portal with sectional timers, live palettes, and official negative marking.",
+    fullDesc: "A complete computer-based testing engine replicating the official XLRI XAT environment.\n\n• Custom Timers & Section Drills: Select individual sections (VALR, DM, QA-DI, GK) with custom time caps (60/100/180m) and automatic Part 1 / Part 2 transitions.\n• Accurate XAT Marking Algorithm: Computes +1.0 for correct, -0.25 for incorrect, and exact unattempted question penalties (-0.10 deduction past the first 8 unattempted in Part 1; no negative marking in GK).\n• Performance Analytics & Downloads: Section-wise score breakdowns, color-coded solution reviews, and one-click JSON/Printable HTML revision sheets.\n• Multi-Mock Architecture: Decoupled JSON data store handling multiple mocks cleanly.",
+    icon: "fa-graduation-cap",
+    stack: "Vanilla JS (ES6+), Multi-Mock JSON, LocalStorage, Web APIs",
+    status: "Production Ready / Live",
+    liveUrl: "https://xatexam.vercel.app/",
+    repoUrl: "https://github.com/yummiilove/xat-exam-simulator",
+    isProfile: false
+  },
   {
     id: "lumeeflame",
     tag: "E-COMMERCE / BRAND",
-    num: "01",
+    num: "02",
     title: "LumeeFlame",
     shortDesc: "Sculpted soy candle storefront with clean UI, optimized checkout, and responsive design.",
     fullDesc: "An artisanal candle e-commerce brand developed with a distinct visual identity, high-speed image loading, mobile-first responsiveness, and structured catalog displays.",
@@ -25,9 +38,16 @@ const projectsData = [
     isProfile: false
   },
   {
+    id: "profile",
+    isProfile: true,
+    tag: "IDENTITY",
+    handle: "@rudra",
+    bio: "1st Year BCA student blending AI web design with robust full-stack software development."
+  },
+  {
     id: "spendy",
     tag: "FINTECH / UTILITY",
-    num: "02",
+    num: "03",
     title: "Spendy Tracker",
     shortDesc: "Modern expense tracker web app with dynamic balance calculations and sleek aesthetics.",
     fullDesc: "Spendy offers instant financial ledger tracking with category distributions, dynamic calculation algorithms, and clean data feedback without bulky dependencies.",
@@ -39,22 +59,15 @@ const projectsData = [
     isProfile: false
   },
   {
-    id: "profile",
-    isProfile: true,
-    tag: "IDENTITY",
-    handle: "@Rudra",
-    bio: "1st Year BCA student blending AI web design with robust full-stack software development."
-  },
-  {
     id: "ads-platform",
     tag: "MONETIZATION",
-    num: "03",
+    num: "04",
     title: "Ad-Integrated Engine",
     shortDesc: "High-performance web architecture seamlessly configured with programmatic ad scripts.",
     fullDesc: "Engineered specifically to solve layout shifts and performance degradation when integrating dynamic ad networks and banner scripts into modern web pages.",
     icon: "fa-rectangle-ad",
     stack: "JavaScript, AdSense / Dynamic Scripts",
-    status: "Architecture Test",
+    status: "Production Ready",
     liveUrl: "https://webpage-for-ads.vercel.app/",
     repoUrl: "https://github.com/yummiilove",
     isProfile: false
@@ -62,7 +75,7 @@ const projectsData = [
   {
     id: "todo-scheduler",
     tag: "PRODUCTIVITY",
-    num: "04",
+    num: "05",
     title: "Interactive Scheduler",
     shortDesc: "Clean task scheduler built with pure JavaScript state management and local persistence.",
     fullDesc: "A zero-lag productivity board built to demonstrate mastery over pure DOM mutations, state stores, event bubbling, and responsive layouts.",
@@ -170,91 +183,94 @@ function renderDeck() {
   }).join("");
 }
 
-// 4. GSAP Fan-out Math & Zero-Stuck Z-Index Controller
+// 4. GSAP Fan-out Math with Responsive Breakpoint Handling
 function initialize3DDeck() {
   const cards = document.querySelectorAll(".deck-item");
   const total = cards.length;
+  const isMobile = window.innerWidth <= 768;
   const middleIndex = Math.floor(total / 2);
 
-  // Balanced fan angle and offset spread to avoid card clipping
-  const angles = [-26, -13, 0, 13, 26];
-  const xOffsets = [-170, -85, 0, 85, 170];
-  const yOffsets = [24, 8, 0, 8, 24];
+  // Geometry tailored for mobile vs desktop
+  const angles = isMobile 
+    ? [-16, -8, 0, 8, 16, 24] 
+    : [-30, -18, -6, 6, 18, 30];
+  const xOffsets = isMobile 
+    ? [-70, -35, 0, 35, 70, 105] 
+    : [-220, -130, -45, 45, 130, 220];
+  const yOffsets = isMobile 
+    ? [14, 6, 0, 6, 14, 22] 
+    : [28, 12, 0, 0, 12, 28];
 
   cards.forEach((card, index) => {
     const defaultAngle = angles[index] || 0;
     const defaultX = xOffsets[index] || 0;
     const defaultY = yOffsets[index] || 0;
-    // Default hierarchy: center is highest, edges cascade down
-    const baseZ = 10 - Math.abs(middleIndex - index);
+    const baseZ = 20 - Math.abs(middleIndex - index);
 
-    // Initial load animation
-    gsap.set(card, { x: 0, y: 150, rotation: 0, opacity: 0, zIndex: baseZ });
+    // Initial entrance
+    gsap.set(card, { x: 0, y: 120, rotation: 0, opacity: 0, zIndex: baseZ });
     gsap.to(card, {
-      duration: 1.0,
+      duration: 0.9,
       x: defaultX,
       y: defaultY,
       rotation: defaultAngle,
       opacity: 1,
       ease: "power3.out",
-      delay: 0.1 * index
+      delay: 0.08 * index
     });
 
-    // Mouse Enter: Elevate zIndex cleanly and spread neighbors slightly
-    card.addEventListener("mouseenter", () => {
-      // Reset any other cards that might be lingering
-      cards.forEach((otherCard, otherIdx) => {
-        if (otherCard !== card) {
-          const otherBaseZ = 10 - Math.abs(middleIndex - otherIdx);
-          gsap.set(otherCard, { zIndex: otherBaseZ });
-        }
+    // Desktop hover & 3D Parallax tilt (disabled on touch devices for fluid performance)
+    if (!isMobile) {
+      card.addEventListener("mouseenter", () => {
+        cards.forEach((otherCard, otherIdx) => {
+          if (otherCard !== card) {
+            const otherBaseZ = 20 - Math.abs(middleIndex - otherIdx);
+            gsap.set(otherCard, { zIndex: otherBaseZ });
+          }
+        });
+        gsap.set(card, { zIndex: 100 });
       });
 
-      // Set active card on top
-      gsap.set(card, { zIndex: 100 });
-    });
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left - rect.width / 2;
+        const mouseY = e.clientY - rect.top - rect.height / 2;
 
-    // 3D Parallax Tilt
-    card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left - rect.width / 2;
-      const mouseY = e.clientY - rect.top - rect.height / 2;
+        const tiltX = (mouseY / (rect.height / 2)) * -10;
+        const tiltY = (mouseX / (rect.width / 2)) * 10;
 
-      const tiltX = (mouseY / (rect.height / 2)) * -10;
-      const tiltY = (mouseX / (rect.width / 2)) * 10;
-
-      gsap.to(card, {
-        x: defaultX,
-        y: defaultY - 28,
-        rotation: defaultAngle * 0.3,
-        rotationX: tiltX,
-        rotationY: tiltY,
-        scale: 1.06,
-        duration: 0.2,
-        ease: "power1.out",
-        overwrite: "auto"
+        gsap.to(card, {
+          x: defaultX,
+          y: defaultY - 26,
+          rotation: defaultAngle * 0.35,
+          rotationX: tiltX,
+          rotationY: tiltY,
+          scale: 1.05,
+          duration: 0.2,
+          ease: "power1.out",
+          overwrite: "auto"
+        });
       });
-    });
 
-    // Mouse Leave: Instantly restores exact resting position and base hierarchy
-    card.addEventListener("mouseleave", () => {
-      gsap.to(card, {
-        x: defaultX,
-        y: defaultY,
-        rotation: defaultAngle,
-        rotationX: 0,
-        rotationY: 0,
-        scale: 1,
-        duration: 0.35,
-        ease: "power2.out",
-        overwrite: "auto",
-        onComplete: () => {
-          gsap.set(card, { zIndex: baseZ });
-        }
+      card.addEventListener("mouseleave", () => {
+        gsap.to(card, {
+          x: defaultX,
+          y: defaultY,
+          rotation: defaultAngle,
+          rotationX: 0,
+          rotationY: 0,
+          scale: 1,
+          duration: 0.35,
+          ease: "power2.out",
+          overwrite: "auto",
+          onComplete: () => {
+            gsap.set(card, { zIndex: baseZ });
+          }
+        });
       });
-    });
+    }
 
-    // Click Modal trigger
+    // Modal Trigger
     card.addEventListener("click", () => {
       const projId = card.getAttribute("data-id");
       openProjectModal(projId);
@@ -272,21 +288,31 @@ function openProjectModal(id) {
 
   document.getElementById("modalTag").innerText = project.tag;
   document.getElementById("modalTitle").innerText = project.title;
-  document.getElementById("modalDesc").innerText = project.fullDesc;
+  
+  // Format linebreaks into clean paragraphs
+  const descEl = document.getElementById("modalDesc");
+  descEl.innerHTML = project.fullDesc.replace(/\n/g, "<br>");
+
   document.getElementById("modalStack").innerText = project.stack;
   document.getElementById("modalStatus").innerText = project.status;
   document.getElementById("modalLiveLink").href = project.liveUrl;
   document.getElementById("modalRepoLink").href = project.repoUrl;
 
   modal.classList.add("active");
+  document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
 }
 
-modalClose?.addEventListener("click", () => modal.classList.remove("active"));
+function closeModal() {
+  modal.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+modalClose?.addEventListener("click", closeModal);
 modal?.addEventListener("click", (e) => {
-  if (e.target === modal) modal.classList.remove("active");
+  if (e.target === modal) closeModal();
 });
 
-// 6. Render Dynamic Skills
+// 6. Dynamic Skills Matrix
 function renderSkills() {
   const container = document.getElementById("skillsGrid");
   if (!container) return;
@@ -314,10 +340,11 @@ const terminalInput = document.getElementById("terminalInput");
 const terminalBody = document.getElementById("terminalBody");
 
 const commandOutputs = {
-  help: "Available commands: <span class='term-highlight'>about</span>, <span class='term-highlight'>skills</span>, <span class='term-highlight'>projects</span>, <span class='term-highlight'>education</span>, <span class='term-highlight'>hire</span>, <span class='term-highlight'>clear</span>",
-  about: "Rudra Pratap Singh — AI Web Developer & Designer. Focused on building high-performance creative web interfaces and learning scalable backend systems.",
-  skills: "HTML5, CSS3, JavaScript, Python, C, GSAP, Figma, Git. Currently learning: Java, React.js, Node.js.",
-  projects: "1. LumeeFlame (E-commerce)<br>2. Spendy (Expense Tracker)<br>3. Ad-Integrated Platform<br>4. Interactive Task Scheduler",
+  help: "Available commands: <span class='term-highlight'>about</span>, <span class='term-highlight'>skills</span>, <span class='term-highlight'>projects</span>, <span class='term-highlight'>xat</span>, <span class='term-highlight'>education</span>, <span class='term-highlight'>hire</span>, <span class='term-highlight'>clear</span>",
+  about: "Rudra Pratap Singh — AI Web Developer & Designer. Passionate about shipping production web software, interactive UI systems, and mastering backend engineering.",
+  skills: "HTML5, CSS3, JavaScript, Python, C, GSAP, Figma, Git. Currently expanding into: Java, React.js, Node.js.",
+  projects: "1. XAT Exam Simulator (Live Engine)<br>2. LumeeFlame (E-commerce)<br>3. Spendy (Expense Tracker)<br>4. Monetization Engine (Ad-Integrated)<br>5. Task Scheduler",
+  xat: "XAT Simulator: Replicates national MBA testing UI with sectional timers (VALR, DM, QA-DI, GK), negative scoring (-0.25), unattempted question penalty (-0.10 past 8 skipped), and downloadable answer keys. URL: <a href='https://xatexam.vercel.app/' target='_blank' style='color:#ff3333;'>xatexam.vercel.app</a>",
   education: `
     <strong>1. BCA (1st Year, 2025–Present)</strong><br>
     Maharana Pratap Engineering College, Kanpur (Affiliated with AKTU)<br><br>
@@ -353,26 +380,32 @@ terminalInput?.addEventListener("keydown", (e) => {
   }
 });
 
-// 8. Custom Magnetic Cursor
+// 8. Custom Magnetic Cursor (Desktop Only)
 const cursorDot = document.getElementById("cursorDot");
 const cursorCircle = document.getElementById("cursorCircle");
 
-window.addEventListener("mousemove", (e) => {
-  const { clientX: x, clientY: y } = e;
-  cursorDot.style.left = `${x}px`;
-  cursorDot.style.top = `${y}px`;
+if (window.matchMedia("(pointer: fine)").matches) {
+  window.addEventListener("mousemove", (e) => {
+    const { clientX: x, clientY: y } = e;
+    cursorDot.style.left = `${x}px`;
+    cursorDot.style.top = `${y}px`;
 
-  cursorCircle.animate({ left: `${x}px`, top: `${y}px` }, { duration: 250, fill: "forwards" });
-});
+    cursorCircle.animate({ left: `${x}px`, top: `${y}px` }, { duration: 250, fill: "forwards" });
+  });
 
-document.querySelectorAll("a, button, .deck-item, input").forEach((el) => {
-  el.addEventListener("mouseenter", () => document.body.classList.add("cursor-hover"));
-  el.addEventListener("mouseleave", () => document.body.classList.remove("cursor-hover"));
-});
+  document.querySelectorAll("a, button, .deck-item, input").forEach((el) => {
+    el.addEventListener("mouseenter", () => document.body.classList.add("cursor-hover"));
+    el.addEventListener("mouseleave", () => document.body.classList.remove("cursor-hover"));
+  });
+}
 
-// 9. Resume button prompt
-document.getElementById("resumeBtn")?.addEventListener("click", () => {
-  alert("Resume is currently being updated for 2026 and will be available to download shortly!");
+// 9. Resize recalculation
+let resizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    initialize3DDeck();
+  }, 250);
 });
 
 // Initialize on DOM load
